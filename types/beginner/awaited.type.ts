@@ -18,6 +18,7 @@ type MyAwaited<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
   type ExampleType = Promise<string>;
 
   type Result = MyAwaited<ExampleType>; // string
-  const r: Result = "!23";
+  const r = "!23";
+
   //   const r2: Result = 123;
 }
