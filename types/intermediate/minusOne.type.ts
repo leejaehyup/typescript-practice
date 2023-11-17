@@ -4,7 +4,7 @@
 
 type MakeNumberToArray<T extends number, U extends unknown[] = []> = U['length'] extends T
   ? U
-  : MakeNumberToArray<T, [...U, 0]>;
+  : MakeNumberToArray<T, [...U, unknown]>;
 
 type MinusOne<T extends number> = MakeNumberToArray<T> extends [infer R, ...infer U]
   ? R extends undefined
