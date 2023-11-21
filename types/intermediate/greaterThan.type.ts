@@ -3,12 +3,14 @@
  * Negative numbers do not need to be considered.
  */
 
-type GreaterThan<T extends number, U extends number> = MakeNumberToArray<U> extends [
-  ...MakeNumberToArray<T>,
+type GreaterThan<T extends number, U extends number> = MakeNumberToArray<T> extends [
+  ...MakeNumberToArray<U>,
   ...infer _,
 ]
-  ? false
-  : true;
+  ? _['length'] extends 0
+    ? false
+    : true
+  : false;
 
 /**
  * test
