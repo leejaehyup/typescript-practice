@@ -2,14 +2,13 @@
  * 주어진 배열을 플랫한 배열 타입으로 바꾸는 Flatten 타입을 구현하세요.
  */
 
-type Flatten<T extends any[], K extends any[] = []> = T extends [
-  infer F,
-  ...infer R
-]
-  ? F extends any[]
-    ? Flatten<[...F, ...R], K>
-    : Flatten<R, [...K, F]>
-  : K;
+type Flatten<T, R extends any[] = []> = T extends [infer F, ...infer L]
+  ? [F] extends [never]
+    ? Flatten<L, R>
+    : F extends any[]
+    ? Flatten<L, [...R, ...Flatten<F>]>
+    : Flatten<L, [...R, F]>
+  : R;
 
 /**
  * test
