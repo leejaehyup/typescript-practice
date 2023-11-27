@@ -2,7 +2,7 @@
  * Given a number (always positive) as a type. Your type should return the number decreased by one.
  */
 
-type MakeNumberToArray<T extends number, U extends unknown[] = []> = U['length'] extends T
+type MakeNumberToArray<T extends number | string, U extends unknown[] = []> = `${U['length']}` extends `${T}`
   ? U
   : MakeNumberToArray<T, [...U, unknown]>;
 
