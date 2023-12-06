@@ -6,9 +6,11 @@
 
 import { Equal, Expect } from 'types/checker.type';
 
-type Curried<F> = F extends (...args: infer T) => infer R
+type Curried<F, U extends unknown[] = []> = F extends (...args: infer T) => infer R
   ? T extends [infer First, ...infer Rest]
-    ? (arg: First) => Curried<(...arg: Rest) => R>
+    ? (arg: First) => Curried<(...arg: Rest) => R, [...U, unknown]>
+    : U['length'] extends 0
+    ? F
     : R
   : never;
 declare function Currying<F>(fn: F): Curried<F>;
