@@ -4,6 +4,14 @@
 
 import { Equal, Expect } from 'types/checker.type';
 
+type Flatten<T, R extends any[] = []> = T extends [infer F, ...infer L]
+  ? [F] extends [never]
+    ? Flatten<L, R>
+    : F extends any[]
+    ? Flatten<L, [...R, ...Flatten<F>]>
+    : Flatten<L, [...R, F]>
+  : R;
+
 type CountElementNumberToObject<
   T extends unknown[],
   U extends any[] = Flatten<T>,
@@ -22,6 +30,7 @@ type CountElementNumberToObject<
   type Simple2 = CountElementNumberToObject<[1, 2, 3, 4, 5]>;
 
   type Simple3 = CountElementNumberToObject<[1, 2, 3, 4, 5, [1, 2, 3]]>;
+
   type cases = [
     Expect<
       Equal<
